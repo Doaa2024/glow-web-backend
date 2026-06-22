@@ -1,0 +1,42 @@
+<?php
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
+Route::post('/signup',[App\Http\Controllers\Api\AuthController::class,'SignUp']);
+Route::post('/login',[App\Http\Controllers\Api\AuthController::class,'Login']);
+Route::post('/logout',[App\Http\Controllers\Api\AuthController::class,'Logout'])->middleware('auth:sanctum');   
+Route::get('/categories',[App\Http\Controllers\Api\CategoryController::class,'getAllCategories']);
+Route::get('/categories/paginated',[App\Http\Controllers\Api\CategoryController::class,'getAllCategoriesPaginated']);
+Route::get('/categories/{id}',[App\Http\Controllers\Api\CategoryController::class,'getCategoryByID']);
+Route::get('/categories/{id}/products',[App\Http\Controllers\Api\CategoryController::class,'getProductByCategoryID']);
+Route::put('/categories/{id}',[App\Http\Controllers\Api\CategoryController::class,'updateCategory']);
+Route::delete('/categories/{id}',[App\Http\Controllers\Api\CategoryController::class,'deleteCategory']);
+Route::post('/categories',[App\Http\Controllers\Api\CategoryController::class,'createCategory']);
+Route::get('/products',[App\Http\Controllers\Api\ProductController::class,'getAllProducts']);
+Route::get('/products/paginated',[App\Http\Controllers\Api\ProductController::class,'getAllProductsPaginated']);
+Route::get('/products/{id}',[App\Http\Controllers\Api\ProductController::class,'getProductByID']);
+Route::get('/products/category/{id}',[App\Http\Controllers\Api\ProductController::class,'getProductByCategoryID']);
+Route::post('/products',[App\Http\Controllers\Api\ProductController::class,'createProduct']);
+Route::put('/products/{id}',[App\Http\Controllers\Api\ProductController::class,'updateProduct']);       
+Route::delete('/products/{id}',[App\Http\Controllers\Api\ProductController::class,'deleteProductByID']);
+Route::get('/products/related/{id}',[App\Http\Controllers\Api\ProductController::class,'getRelatedProducts']);
+Route::get('/orders',[App\Http\Controllers\Api\OrderController::class,'getAllOrders']);
+Route::get('/orders/{id}',[App\Http\Controllers\Api\OrderController::class,'getOrderByID'])->middleware('auth:sanctum');
+Route::post('/orders',[App\Http\Controllers\Api\OrderController::class,'createOrder'])->middleware('auth:sanctum');
+Route::put('/orders/{id}',[App\Http\Controllers\Api\OrderController::class,'updateOrder'])->middleware('auth:sanctum');
+Route::delete('/orders/{id}',[App\Http\Controllers\Api\OrderController::class,'deleteOrder'])->middleware('auth:sanctum');  
+Route::get('/getOrdersByUserLoginID',[App\Http\Controllers\Api\OrderController::class,'getOrdersByUserLoginID'])->middleware('auth:sanctum');  
+Route::get('/getAllOrdersOfUsers',[App\Http\Controllers\Api\OrderController::class,'getAllOrdersOfUsers'])->middleware('auth:sanctum'); 
+Route::get('/getOrderDetails/{id}',[App\Http\Controllers\Api\OrderController::class,'getOrderDetails']); 
+Route::get('/getOrdersOnlyByUserLoginID',[App\Http\Controllers\Api\OrderController::class,'getOrdersOnlyByUserLoginID'])->middleware('auth:sanctum'); 
+Route::get('/getCart',[App\Http\Controllers\Api\UserController::class,'getCartItems'])->middleware('auth:sanctum'); 
+Route::post('/addCartItem',[App\Http\Controllers\Api\CartController::class,'addItemToCart'])->middleware('auth:sanctum');
+Route::delete('/removeCartItem/{id}',[App\Http\Controllers\Api\CartController::class,'removeItemFromCart'])->middleware('auth:sanctum');
+Route::put('/cart/{id}',[App\Http\Controllers\Api\CartController::class,'updateQuantity'])->middleware('auth:sanctum');
+Route::get('/getDashboardData',[App\Http\Controllers\Api\DashboardController::class,'getDashboardData']);
+Route::get('/getTopSellingProducts',[App\Http\Controllers\Api\DashboardController::class,'getTopSellingProducts']);
+Route::get('/getMonthlyRevenue',[App\Http\Controllers\Api\DashboardController::class,'getMonthlyRevenue']);
+Route::get('/getTopOrders',[App\Http\Controllers\Api\DashboardController::class,'getTopOrders']);
